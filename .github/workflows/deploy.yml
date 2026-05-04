@@ -16,19 +16,19 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             # 1. Setup project directory
-            if [ ! -d ~/backend-docker ]; then
-              git clone https://github.com/priyanshudotgit/GithubActionsTest.git ~/backend-docker
+            if [ ! -d ~/web-project ]; then
+              git clone https://github.com/priyanshudotgit/GithubActionsTest.git ~/web-project
             fi
-            cd ~/backend-docker
+            cd ~/web-project
 
             # 2. Update code and build
             git pull origin main
-            docker build -t backend-app .
+            docker build -t static-web-app .
 
             # 3. Refresh container
-            docker stop backend-container || true
-            docker rm backend-container || true
-            docker run -d -p 3000:3000 --name backend-container backend-app
+            docker stop web-container || true
+            docker rm web-container || true
+            docker run -d -p 80:80 --name web-container static-web-app
             
             # 4. Storage Maintenance
             docker image prune -f  # Deletes old images to save EC2 disk space
