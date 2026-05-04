@@ -28,7 +28,7 @@ jobs:
             # 3. Refresh container
             docker stop web-container || true
             docker rm web-container || true
-            docker run -d -p 80:80 --name web-container static-web-app
+            docker run -d -p 3000:3000 --name web-container static-web-app
             
             # 4. Storage Maintenance
             docker image prune -f  # Deletes old images to save EC2 disk space
